@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "934776658648",
+    "firebase_url": "https://upick-775b7.firebaseio.com",
+    "project_id": "upick-775b7",
+    "storage_bucket": "upick-775b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934776658648:android:306668bd0f5c5ed9da55ad",
+        "android_client_info": {
+          "package_name": "com.example.upick_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934776658648-hpc8cpn5mvdhks6br3vmvu04fpg2thmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACkAnEuTPO6urnhgsXtzxyLReyMTjwto0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934776658648-hpc8cpn5mvdhks6br3vmvu04fpg2thmi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
