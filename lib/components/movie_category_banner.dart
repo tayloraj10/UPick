@@ -6,7 +6,8 @@ class MovieCategoryBanner extends StatelessWidget {
   String imageUrl;
   List<Map<dynamic, dynamic>> data;
 
-  MovieCategoryBanner({@required this.title, @required this.imageUrl});
+  MovieCategoryBanner(
+      {@required this.title, @required this.imageUrl, @required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,9 @@ class MovieCategoryBanner extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SessionChooserPage(),
+                builder: (context) => SessionChooserPage(
+                  movieData: data,
+                ),
               ),
             );
           },

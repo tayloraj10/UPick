@@ -6,9 +6,11 @@ import 'package:upick_test/sample_data.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/movie_detail_page.dart';
 import 'package:upick_test/utilities/fetch_url.dart';
+import 'package:sampling/sampling.dart';
+import 'dart:math';
 
 class Swiper extends StatefulWidget {
-  List<Map> movieData;
+  List<Map<dynamic, dynamic>> movieData;
 
   Swiper({@required this.movieData});
 
@@ -31,12 +33,19 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
   //   'Pulp Fiction',
   //   'Napoleon Dynamite'
   // ];
-  List<Map> movieData = []; //sampleData;
+  List movieData = []; //sampleData;
   List<Map> likedMovies = [];
+
+  List getRandomMovies(int n) {
+    dynamic sampler = new ReservoirSampler(n, random: new Random.secure());
+    sampler.addAll(widget.movieData);
+    return sampler.getSample();
+  }
 
   void setMovieData() {
     setState(() {
-      movieData = widget.movieData;
+      movieData = getRandomMovies(10);
+      // movieData = widget.movieData;
     });
   }
 
@@ -49,11 +58,12 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
       print('FINISHED LOADING');
       isLoading = false;
     });
+    getRandomMovies(5);
   }
 
   Future<void> fetchMovies() async {
     String url =
-        'https://api.themoviedb.org/3/movie/popular?api_key=$movide_db_api_key&language=en-US';
+        'https://api.themoviedb.org/3/movie/popular?api_key=$movie_db_api_key&language=en-US';
     print(url);
     var data = await fetcher.getData(url);
     // print(data);
@@ -189,7 +199,7 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                               // print('index ${index}');
                               return Card(
                                 child: Hero(
-                                  child: Image.network(posterUrl +
+                                  child: Image.network(
                                       '${movieData[index]['Poster']}'),
                                   tag: movieData[index]['Title'],
                                 ),

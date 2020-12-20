@@ -5,7 +5,7 @@ import 'package:pinput/pin_put/pin_put.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/screens/swipe_screen.dart';
 
-class SessionPage extends StatelessWidget {
+class SessionStarterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

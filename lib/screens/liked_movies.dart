@@ -107,8 +107,8 @@ class _LikedMoviesState extends State<LikedMovies> {
                                       ),
                                     ),
                                     Flexible(
-                                        child: Image.network(
-                                            posterUrl + '${movie['Poster']}'))
+                                        child:
+                                            Image.network('${movie['Poster']}'))
                                   ],
                                 ),
                               ),

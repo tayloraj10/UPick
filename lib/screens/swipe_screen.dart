@@ -4,6 +4,10 @@ import 'package:upick_test/components/swiper.dart';
 import 'package:upick_test/sample_data.dart';
 
 class SwipeScreen extends StatefulWidget {
+  List<Map<dynamic, dynamic>> movieData;
+
+  SwipeScreen({@required this.movieData});
+
   @override
   _SwipeScreenState createState() => _SwipeScreenState();
 }
@@ -18,7 +22,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
           Expanded(
             child: Center(
               child: Swiper(
-                movieData: sampleData,
+                movieData: widget.movieData,
               ),
             ),
           ),

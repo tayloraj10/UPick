@@ -3,10 +3,6 @@ import 'package:upick_test/components/movie_category_banner.dart';
 import 'package:upick_test/sample_data.dart';
 
 class HomeScreen extends StatelessWidget {
-  List<Map<dynamic, dynamic>> homeBannerData_feed;
-
-  HomeScreen({this.homeBannerData_feed});
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -15,30 +11,27 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Ready to find a movie to watch?",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 24,
-                  fontFamily: 'NunitoSans',
-                  fontWeight: FontWeight.w700),
-            ),
-            ButtonBar(
-              alignment: MainAxisAlignment.center,
-              children: [],
+            Padding(
+              padding: EdgeInsets.only(bottom: 10),
+              child: Text(
+                "Ready to find a movie to watch?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'NunitoSans',
+                    fontWeight: FontWeight.w700),
+              ),
             ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  MovieCategoryBanner(
-                    title: 'Popular Movies',
-                    imageUrl:
-                        'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/popular-movies-year-born-1523052006.jpg?crop=1.00xw:1.00xh;0,0&resize=480:*',
-                  ),
-                  for (var banner in homeBannerData)
+                  for (var banner in homeBanners)
                     MovieCategoryBanner(
-                        title: banner['Title'], imageUrl: banner['ImageUrl']),
+                      title: banner['Title'],
+                      imageUrl: banner['ImageUrl'],
+                      data: banner['Data'],
+                    ),
                   MovieCategoryBanner(
                     title: 'Custom Categories',
                     imageUrl:

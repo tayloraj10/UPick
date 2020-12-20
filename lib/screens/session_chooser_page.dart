@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
-import 'package:upick_test/screens/session_page.dart';
+import 'package:upick_test/screens/session_starter_page.dart';
 import 'package:upick_test/screens/swipe_screen.dart';
 
 class SessionChooserPage extends StatelessWidget {
+  List<Map<dynamic, dynamic>> movieData;
+
+  SessionChooserPage({@required this.movieData});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UPickAppBar(),
       body: SafeArea(
-        child: SessionChooser(),
+        child: SessionChooser(
+          movieData: movieData,
+        ),
       ),
     );
   }
 }
 
 class SessionChooser extends StatelessWidget {
+  List<Map<dynamic, dynamic>> movieData;
+
+  SessionChooser({@required this.movieData});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,7 +54,7 @@ class SessionChooser extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SessionPage(),
+                        builder: (context) => SessionStarterPage(),
                       ),
                     );
                   },
@@ -71,7 +81,7 @@ class SessionChooser extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SwipeScreen(),
+                        builder: (context) => SwipeScreen(movieData: movieData),
                       ),
                     );
                   },
