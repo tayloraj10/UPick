@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/liked_movies.dart';
+import 'package:upick_test/screens/loading_screen.dart';
 import 'package:upick_test/screens/movie_detail_page.dart';
 import 'package:upick_test/screens/swipe_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,10 +31,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: UPickAppBar(),
+        // appBar: UPickAppBar(),
         body: SafeArea(
           //TODO make a loading screen
-          child: HomeScreen(),
+          child: LoadingScreen(),
         ),
       ),
     );

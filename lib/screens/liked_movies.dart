@@ -14,7 +14,7 @@ class LikedMovies extends StatefulWidget {
 
 class _LikedMoviesState extends State<LikedMovies> {
   void reset() {
-    Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.popUntil(context, ModalRoute.withName('/home'));
   }
 
   void launchURL(String url) async {
