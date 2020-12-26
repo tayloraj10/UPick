@@ -58,7 +58,6 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
       print('FINISHED LOADING');
       isLoading = false;
     });
-    getRandomMovies(5);
   }
 
   Future<void> fetchMovies() async {
@@ -93,22 +92,24 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
         swipingFinished = true;
       });
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => LikedMovies(
-                    likedMovies: likedMovies,
-                  )));
+        context,
+        MaterialPageRoute(
+          builder: (context) => LikedMovies(
+            likedMovies: likedMovies,
+          ),
+        ),
+      );
     } else {
       setState(() {
         movieIndex++;
       });
-      print(movieData[movieIndex]);
+      // print(movieData[movieIndex]);
     }
   }
 
   void likedMovie() {
     setState(() {
-      print(movieData[movieIndex]);
+      // print(movieData[movieIndex]);
       likedMovies.add(movieData[movieIndex]);
     });
   }
@@ -163,7 +164,9 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text.rich(
                           TextSpan(
-                            text: movieData[movieIndex]['Plot'] ?? '',
+                            text: (movieData[movieIndex]['Plot'] ?? '') == 'N/A'
+                                ? 'No plot available'
+                                : movieData[movieIndex]['Plot'] ?? '',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'NunitoSans',
@@ -200,7 +203,9 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                               return Card(
                                 child: Hero(
                                   child: Image.network(
-                                      '${movieData[index]['Poster']}'),
+                                      '${movieData[index]['Poster']}' == 'N/A'
+                                          ? noPosterUrl
+                                          : '${movieData[index]['Poster']}'),
                                   tag: movieData[index]['Title'],
                                 ),
                               );

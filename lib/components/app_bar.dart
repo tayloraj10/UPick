@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-UPickAppBar() {
+UPickAppBar({bool showBack = true}) {
   return AppBar(
-    // leading: Container(),
+    automaticallyImplyLeading: showBack,
     centerTitle: true,
     elevation: 10,
     title: Text(

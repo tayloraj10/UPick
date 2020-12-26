@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/screens/swipe_screen.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SessionStarterPage extends StatelessWidget {
   @override
@@ -93,6 +94,7 @@ class _SessionState extends State<Session> {
               ),
             ),
           ),
+
           RaisedButton(
             color: Colors.yellow,
             onPressed: code.length == 5

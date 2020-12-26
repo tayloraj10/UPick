@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:upick_test/screens/custom_categories_picker.dart';
 import 'package:upick_test/screens/session_chooser_page.dart';
 
 class MovieCategoryBanner extends StatelessWidget {
@@ -17,14 +18,22 @@ class MovieCategoryBanner extends StatelessWidget {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SessionChooserPage(
-                  movieData: data,
+            if (title == 'Custom Categories')
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CustomCategoriesPicker(),
                 ),
-              ),
-            );
+              );
+            else
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SessionChooserPage(
+                    movieData: data,
+                  ),
+                ),
+              );
           },
           child: Stack(
             fit: StackFit.expand,
