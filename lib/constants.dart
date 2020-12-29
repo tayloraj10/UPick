@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sampling/sampling.dart';
+import 'dart:math';
 
 Color appBackgroundColor = Colors.grey[200];
 
@@ -18,6 +20,12 @@ void launchURL(String url) async {
   } else {
     print('Could not launch $url');
   }
+}
+
+List getRandomMovies(int n, movieData) {
+  dynamic sampler = new ReservoirSampler(n, random: new Random.secure());
+  sampler.addAll(movieData);
+  return sampler.getSample();
 }
 
 List ratingOptions = ['G', 'PG', 'PG-13', 'NC-17', 'R'];

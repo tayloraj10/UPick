@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/constants.dart';
-import 'package:upick_test/screens/swipe_screen.dart';
 import 'package:upick_test/utilities/fetch_url.dart';
+import 'file:///C:/Users/taylo/AndroidStudioProjects/upick_test/lib/screens/swiper.dart';
 
 class CustomCategoriesPicker extends StatefulWidget {
   @override
@@ -243,8 +243,7 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                SwipeScreen(movieData: movieData),
+                            builder: (context) => Swiper(movieData: movieData),
                           ),
                         );
                       },

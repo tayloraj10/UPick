@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/screens/session_starter_page.dart';
-import 'package:upick_test/screens/swipe_screen.dart';
+import 'file:///C:/Users/taylo/AndroidStudioProjects/upick_test/lib/screens/swiper.dart';
 
 class SessionChooserPage extends StatelessWidget {
   List<Map<dynamic, dynamic>> movieData;
@@ -54,7 +54,9 @@ class SessionChooser extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SessionStarterPage(),
+                        builder: (context) => SessionStarterPage(
+                          movieData: movieData,
+                        ),
                       ),
                     );
                   },
@@ -81,7 +83,10 @@ class SessionChooser extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SwipeScreen(movieData: movieData),
+                        builder: (context) => Swiper(
+                          movieData: movieData,
+                          isSession: false,
+                        ),
                       ),
                     );
                   },

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/loading_screen.dart';
 import 'package:upick_test/screens/movie_detail_page.dart';
-import 'package:upick_test/screens/swipe_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:upick_test/screens/swiper.dart';
 
 // void main() => runApp(MyApp());
 
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/home': (context) => HomeScreen(),
-        '/swipe': (context) => SwipeScreen(),
+        '/swipe': (context) => Swiper(),
         '/liked': (context) => LikedMovies(),
         '/movie_detail': (context) => MovieDetailPage(),
       },

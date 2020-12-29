@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
+import 'package:upick_test/sample_data.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -12,6 +14,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     // WidgetsBinding.instance
     //     .addPostFrameCallback((_) => Navigator.pushNamed(context, '/home'));
     finishedLoading();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> finishedLoading() async {
