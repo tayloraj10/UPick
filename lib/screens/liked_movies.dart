@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:upick_test/screens/loading_screen.dart';
 
 class LikedMoviesPage extends StatelessWidget {
   bool isSession;
@@ -194,7 +195,12 @@ class LikedMovies extends StatefulWidget {
 
 class _LikedMoviesState extends State<LikedMovies> {
   void reset() {
-    Navigator.popUntil(context, ModalRoute.withName('/home'));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoadingScreen(),
+      ),
+    );
   }
 
   @override

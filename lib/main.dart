@@ -8,6 +8,8 @@ import 'package:upick_test/screens/swiper.dart';
 
 // void main() => runApp(MyApp());
 
+//TODO Use provider for state management
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/swipe': (context) => Swiper(),
         '/liked': (context) => LikedMovies(),
         '/movie_detail': (context) => MovieDetailPage(),
+        '/loading': (context) => LoadingScreen()
       },
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -32,7 +35,6 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         // appBar: UPickAppBar(),
         body: SafeArea(
-          //TODO make a loading screen
           child: LoadingScreen(),
         ),
       ),

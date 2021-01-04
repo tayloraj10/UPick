@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_category_banner.dart';
-import 'package:upick_test/sample_data.dart';
 
 class HomeScreen extends StatelessWidget {
+  List<Map<dynamic, dynamic>> homeBanners;
+
+  HomeScreen({@required this.homeBanners});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                         imageUrl: banner['ImageUrl'],
                         data: banner['Data'],
                       ),
-                    //TODO Implement Custom Categories Card
+                    //TODO Route Custom Categories Card through session chooser
                     MovieCategoryBanner(
                       title: 'Custom Categories',
                       imageUrl:
