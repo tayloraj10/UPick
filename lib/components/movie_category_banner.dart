@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:upick_test/models/app_data.dart';
 import 'package:upick_test/screens/custom_categories_picker.dart';
 import 'package:upick_test/screens/session_chooser_page.dart';
 
 class MovieCategoryBanner extends StatelessWidget {
   String title;
   String imageUrl;
+  String tooltip;
   List<Map<dynamic, dynamic>> data;
 
   MovieCategoryBanner(
-      {@required this.title, @required this.imageUrl, @required this.data});
+      {@required this.title, @required this.imageUrl, this.data, this.tooltip});
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +28,16 @@ class MovieCategoryBanner extends StatelessWidget {
                   builder: (context) => CustomCategoriesPicker(),
                 ),
               );
-            else
+            else {
+              Provider.of<appData>(context, listen: false)
+                  .updateMovieData(data);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SessionChooserPage(
-                    movieData: data,
-                  ),
+                  builder: (context) => SessionChooserPage(),
                 ),
               );
+            }
           },
           child: Stack(
             fit: StackFit.expand,

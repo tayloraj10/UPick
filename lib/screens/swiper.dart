@@ -7,21 +7,10 @@ import 'package:upick_test/screens/movie_detail_page.dart';
 import 'package:upick_test/utilities/fetch_url.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:upick_test/models/app_data.dart';
 
 class Swiper extends StatefulWidget {
-  List<Map<dynamic, dynamic>> movieData;
-  bool isSession;
-  int userNum;
-  String sessionCode;
-  String sessionID;
-
-  Swiper(
-      {@required this.movieData,
-      this.isSession = false,
-      this.userNum = 0,
-      this.sessionCode = '',
-      this.sessionID = ''});
-
   @override
   _SwiperState createState() => _SwiperState();
 }
@@ -33,51 +22,43 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
 
   int movieIndex = 0;
 
-  List movieData = []; //sampleData;
-  List<Map> likedMovies = [];
+  List movieData = [];
+  List<Map<dynamic, dynamic>> likedMovies = [];
 
   var firestore = FirebaseFirestore.instance.collection('sessions');
   var firestoreData;
 
   void setMovieData() {
     setState(() {
-      movieData = getRandomMovies(10, widget.movieData);
-      // movieData = widget.movieData;
+      movieData = Provider.of<appData>(context, listen: false).getNMovies(10);
     });
   }
 
   void setFirestoreData() {
-    firestore.where('id', isEqualTo: widget.sessionCode).get().then((value) {
+    firestore
+        .where('id',
+            isEqualTo: Provider.of<appData>(context, listen: false).sessionCode)
+        .get()
+        .then((value) {
       setState(() {
         firestoreData = value.docs.single.data();
       });
-      // print(firestoreData);
     });
   }
 
   @override
   void initState() {
     super.initState();
-    // fetchMovieData();
     setMovieData();
-    if (widget.isSession) {
-      print('fetching firestore data');
+
+    if (Provider.of<appData>(context, listen: false).isSession) {
       setFirestoreData();
     }
   }
 
-  Future<void> fetchMovies() async {
-    String url =
-        'https://api.themoviedb.org/3/movie/popular?api_key=$movie_db_api_key&language=en-US';
-    print(url);
-    var data = await fetcher.getData(url);
-  }
-
   void nextMovie() {
-    print('next movie');
     if (movieIndex == movieData.length - 1) {
-      print('finished movies');
-      if (widget.isSession) {
+      if (Provider.of<appData>(context, listen: false).isSession) {
         List likedMoviesList = [];
 
         for (var m in likedMovies) {
@@ -87,43 +68,34 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
         setFirestoreData();
 
         setState(() {
-          firestoreData['likes']['user${widget.userNum}'] = likedMoviesList;
+          firestoreData['likes'][
+                  'user${Provider.of<appData>(context, listen: false).userNum}'] =
+              likedMoviesList;
         });
 
         firestore
-            .doc(widget.sessionID)
+            .doc(Provider.of<appData>(context, listen: false).sessionID)
             .update({'likes': firestoreData['likes']});
       }
 
-      print(likedMovies);
-      print(widget.isSession);
-      print(widget.userNum);
-      print(widget.sessionID);
-      print(widget.sessionCode);
+      Provider.of<appData>(context, listen: false)
+          .updateLikedMovies(likedMovies);
 
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LikedMoviesPage(
-            likedMovies: likedMovies,
-            isSession: widget.isSession,
-            userNum: widget.userNum,
-            sessionID: widget.sessionID,
-            sessionCode: widget.sessionCode,
-          ),
+          builder: (context) => LikedMoviesPage(),
         ),
       );
     } else {
       setState(() {
         movieIndex++;
       });
-      // print(movieData[movieIndex]);
     }
   }
 
   void likedMovie() {
     setState(() {
-      // print(movieData[movieIndex]);
       likedMovies.add(movieData[movieIndex]);
     });
   }
@@ -157,11 +129,11 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          widget.isSession
+                          Provider.of<appData>(context).isSession
                               ? Column(
                                   children: [
                                     SelectableText(
-                                      'Session ID: ${widget.sessionID.substring(0, 5)}',
+                                      'Session ID: ${Provider.of<appData>(context).sessionID.substring(0, 5)}',
                                       style: TextStyle(fontSize: 20),
                                     ),
                                     SizedBox(
@@ -246,7 +218,7 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                                 swipeUpdateCallback: (DragUpdateDetails details,
                                     Alignment align) {
                                   /// Get swiping card's alignment
-                                  print(align);
+                                  // print(align);
                                   if (align.x < -1) {
                                     // print("Card is LEFT swiping");
                                     setState(() {
@@ -267,19 +239,16 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                                   // print(orientation.toString());
                                   if (orientation ==
                                       CardSwipeOrientation.RECOVER) {
-                                    print("Card Recovered");
-                                    print(movieData.length);
+                                    // print("Card Recovered");
                                     resetBackgroundColor();
                                   } else if (orientation ==
                                       CardSwipeOrientation.LEFT) {
-                                    print("Card is LEFT swiping");
-                                    print(movieData.length);
+                                    // print("Card is LEFT swiping");
                                     resetBackgroundColor();
                                     nextMovie();
                                   } else if (orientation ==
                                       CardSwipeOrientation.RIGHT) {
-                                    print("Card is RIGHT swiping");
-                                    print(movieData.length);
+                                    // print("Card is RIGHT swiping");
                                     resetBackgroundColor();
                                     likedMovie();
                                     nextMovie();

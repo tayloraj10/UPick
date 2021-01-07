@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/constants.dart';
+import 'package:upick_test/screens/session_chooser_page.dart';
 import 'package:upick_test/utilities/fetch_url.dart';
-import 'file:///C:/Users/taylo/AndroidStudioProjects/upick_test/lib/screens/swiper.dart';
+import 'package:provider/provider.dart';
+import 'package:upick_test/models/app_data.dart';
 
 class CustomCategoriesPicker extends StatefulWidget {
   @override
@@ -18,6 +20,8 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
 
   bool loading = false;
 
+  FetchURL fetcher = FetchURL();
+
   String urlStub =
       'https://api.themoviedb.org/3/discover/movie?api_key=$movie_db_api_key&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false';
   //'https://api.themoviedb.org/3/discover/movie?api_key=$movie_db_api_key&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&vote_average.gte=8&with_genres=35&page=1'
@@ -31,8 +35,6 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
       }
     });
   }
-
-  FetchURL fetcher = FetchURL();
 
   Future<List> getMovieTitles(String requestUrl) async {
     List movieTitles = [];
@@ -237,13 +239,16 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
                         List<Map<dynamic, dynamic>> movieData =
                             await getMovieData(movieTitles);
 
+                        Provider.of<appData>(context, listen: false)
+                            .updateMovieData(movieData);
+
                         setState(() {
                           loading = false;
                         });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Swiper(movieData: movieData),
+                            builder: (context) => SessionChooserPage(),
                           ),
                         );
                       },

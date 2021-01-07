@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'home_screen.dart';
-import 'package:upick_test/sample_data.dart';
-
-//TODO have loading screen get banner data from realtime database
+import 'package:provider/provider.dart';
+import 'package:upick_test/models/app_data.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -36,12 +35,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
       }
     });
 
+    Provider.of<appData>(context, listen: false).updateBannerData(bannerData);
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreen(
-          homeBanners: homeBanners,
-        ),
+        builder: (context) => HomeScreen(),
       ),
     );
   }

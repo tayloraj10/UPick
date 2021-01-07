@@ -11,6 +11,9 @@ const String urlStub = 'http://www.omdbapi.com/?apikey=a80dc353&t=';
 const String imdbURL = 'https://www.imdb.com/title/';
 const String posterUrl = 'https://image.tmdb.org/t/p/w500';
 
+const String customCategoriesUrl =
+    'https://miro.medium.com/max/3840/1*jfR0trcAPT3udktrFkOebA.jpeg';
+
 const String noPosterUrl =
     'https://linnea.com.ar/wp-content/uploads/2018/09/404PosterNotFoundReverse.jpg';
 

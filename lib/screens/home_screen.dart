@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_category_banner.dart';
+import 'package:upick_test/constants.dart';
+import 'package:upick_test/models/app_data.dart';
 
 class HomeScreen extends StatelessWidget {
-  List<Map<dynamic, dynamic>> homeBanners;
-
-  HomeScreen({@required this.homeBanners});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +31,16 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    for (var banner in homeBanners)
+                    for (var banner
+                        in Provider.of<appData>(context).homeBanners)
                       MovieCategoryBanner(
                         title: banner['Title'],
                         imageUrl: banner['ImageUrl'],
                         data: banner['Data'],
                       ),
-                    //TODO Route Custom Categories Card through session chooser
                     MovieCategoryBanner(
                       title: 'Custom Categories',
-                      imageUrl:
-                          'https://miro.medium.com/max/3840/1*jfR0trcAPT3udktrFkOebA.jpeg',
+                      imageUrl: customCategoriesUrl,
                     ),
                   ],
                 ),

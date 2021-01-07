@@ -3,35 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:upick_test/screens/loading_screen.dart';
+import 'package:upick_test/screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:upick_test/models/app_data.dart';
 
 class LikedMoviesPage extends StatelessWidget {
-  bool isSession;
-  int userNum;
-  String sessionCode;
-  String sessionID;
-  List<Map> likedMovies;
-
-  LikedMoviesPage(
-      {this.isSession = false,
-      this.userNum,
-      this.sessionCode,
-      this.sessionID,
-      this.likedMovies});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UPickAppBar(showBack: false),
       body: Container(
-        child: isSession
+        child: Provider.of<appData>(context).isSession
             ? LikedMoviesSession(
-                userNum: userNum,
-                sessionCode: sessionCode,
-                sessionID: sessionID,
+                userNum: Provider.of<appData>(context).userNum,
+                sessionCode: Provider.of<appData>(context).sessionCode,
+                sessionID: Provider.of<appData>(context).sessionID,
               )
             : LikedMovies(
-                likedMovies: likedMovies,
+                likedMovies: Provider.of<appData>(context).likedMovies,
               ),
       ),
     );
@@ -50,16 +39,20 @@ class LikedMoviesSession extends StatefulWidget {
 }
 
 class _LikedMoviesSessionState extends State<LikedMoviesSession> {
-  void reset() {
-    Navigator.popUntil(context, ModalRoute.withName('/home'));
-  }
-
   var firestore = FirebaseFirestore.instance.collection('sessions');
+
+  void reset() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ),
+    );
+  }
 
   List everyoneLikedMovies(Map likes, List data) {
     List<Map<dynamic, dynamic>> returnMovies = [];
     Map duplicates = {};
-    print(likes.length);
     int numUsers = likes.length;
     likes.forEach((key, value) {
       for (var v in value) {
@@ -130,13 +123,25 @@ class _LikedMoviesSessionState extends State<LikedMoviesSession> {
                       },
                     ),
                   ),
-                  Text(
-                    'Here are the movies you all liked',
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: 'NunitoSans',
-                        fontWeight: FontWeight.w700),
-                  ),
+                  movies.length == 0
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            "The group didn't like any of these movies :( ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: 'NunitoSans',
+                                fontWeight: FontWeight.w700),
+                          ),
+                        )
+                      : Text(
+                          'Here are the movies you all liked',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.w700),
+                        ),
                   GridView.count(
                     physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
@@ -198,7 +203,7 @@ class _LikedMoviesState extends State<LikedMovies> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoadingScreen(),
+        builder: (context) => HomeScreen(),
       ),
     );
   }
