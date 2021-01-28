@@ -47,6 +47,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_name: "^0.0.1"
+
+flutter_launcher_name:
+  name: "UPick"
+
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
