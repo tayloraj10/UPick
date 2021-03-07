@@ -4,7 +4,6 @@ import 'package:upick_test/models/app_data.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/loading_screen.dart';
-import 'package:upick_test/screens/movie_detail_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:upick_test/screens/swiper.dart';
 
