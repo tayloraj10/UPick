@@ -14,7 +14,7 @@ class SessionStarterPage extends StatefulWidget {
 class _SessionStarterPageState extends State<SessionStarterPage> {
   String sessionCode5 = '';
   String sessionId = '';
-  int userNum = 1;
+  int userNum = 0;
   TextEditingController textEditingController = TextEditingController();
   var firestore = FirebaseFirestore.instance.collection('sessions');
 
@@ -59,7 +59,12 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
           currentSessionId = value.docs.single.id;
           var likes = currentSessionData['likes'];
           userCount = currentSessionData['likes'].length;
-          likes['user${userCount + 1}'] = [];
+
+          List moviesList = [];
+          for (var m in currentSessionData['data']) {
+            moviesList.add(m['Title']);
+          }
+          likes['user${userCount + 1}'] = moviesList;
           firestore.doc(currentSessionId).update({'likes': likes});
         }
       }).then((value) {
