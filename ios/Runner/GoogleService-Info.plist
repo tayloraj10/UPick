@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>934776658648-liv8vnqpvca9tevp0rnlh5uqgmhv37qg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.934776658648-liv8vnqpvca9tevp0rnlh5uqgmhv37qg</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-jwp9FT7OBSKQb1QUBl-BKTASJBTgKbg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>934776658648</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tjohnson.upickTest</string>
+	<key>PROJECT_ID</key>
+	<string>upick-775b7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>upick-775b7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:934776658648:ios:7880f4809eb4cb10da55ad</string>
+	<key>DATABASE_URL</key>
+	<string>https://upick-775b7.firebaseio.com</string>
+</dict>
+</plist>
