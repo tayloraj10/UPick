@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_detail_section.dart';
+import 'package:upick_test/components/streaming_icon.dart';
+import 'package:upick_test/components/streaming_section.dart';
+import 'package:upick_test/constants.dart';
 import 'package:upick_test/constants.dart';
 
 class MovieDetailPage extends StatelessWidget {
@@ -64,6 +67,8 @@ class MovieDetailPage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         children: [
+                          StreamingSection(
+                              streamingData: movieData['Streaming']),
                           MovieDetailSection(
                             title: 'Plot',
                             text: (movieData['Plot'] ?? '') == 'N/A'

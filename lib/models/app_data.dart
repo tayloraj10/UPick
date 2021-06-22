@@ -3,6 +3,7 @@ import 'package:upick_test/constants.dart';
 
 class appData extends ChangeNotifier {
   List<Map<dynamic, dynamic>> homeBanners = [];
+  List<Map<dynamic, dynamic>> extraBanners = [];
   List<Map<dynamic, dynamic>> movieData = [];
   List<Map<dynamic, dynamic>> likedMovies = [];
   bool isSession = false;
@@ -18,8 +19,13 @@ class appData extends ChangeNotifier {
     return movieData;
   }
 
-  void updateBannerData(List<Map<dynamic, dynamic>> newData) {
+  void updateHomeBannerData(List<Map<dynamic, dynamic>> newData) {
     homeBanners = newData;
+    notifyListeners();
+  }
+
+  void updateExtraBannerData(List<Map<dynamic, dynamic>> newData) {
+    extraBanners = newData;
     notifyListeners();
   }
 

@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_category_banner.dart';
 import 'package:upick_test/models/app_data.dart';
+import 'package:upick_test/constants.dart';
 
-class HomeScreen extends StatelessWidget {
+class ExtraScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UPickAppBar(
-          showBack: false, showJoinSession: true, showExtraPage: true),
+      appBar: UPickAppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -32,16 +32,16 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     for (var banner
-                        in Provider.of<appData>(context).homeBanners)
+                        in Provider.of<appData>(context).extraBanners)
                       MovieCategoryBanner(
                         title: banner['Title'],
                         imageUrl: banner['ImageUrl'],
                         data: banner['Data'],
                       ),
-                    // MovieCategoryBanner(
-                    //   title: 'Custom Categories',
-                    //   imageUrl: customCategoriesUrl,
-                    // ),
+                    MovieCategoryBanner(
+                      title: 'Custom Categories',
+                      imageUrl: customCategoriesUrl,
+                    ),
                   ],
                 ),
               ),

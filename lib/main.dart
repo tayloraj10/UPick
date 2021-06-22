@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
+import 'package:upick_test/screens/ad_mob.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/loading_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:upick_test/screens/swiper.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 // void main() => runApp(MyApp());
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+  final FirebaseApp app = await Firebase.initializeApp();
+  MobileAds.instance.initialize();
+  runApp(MyApp(
+    app: app,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  // Future<InitializationStatus> _initGoogleMobileAds() {
+  //   return MobileAds.instance.initialize();
+  // }
+
+  final FirebaseApp app;
+
+  MyApp({this.app});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<appData>(
       create: (context) => appData(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         routes: {
           '/home': (context) => HomeScreen(),
           '/swipe': (context) => Swiper(),
@@ -35,7 +50,10 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           // appBar: UPickAppBar(),
           body: SafeArea(
-            child: LoadingScreen(),
+            child: LoadingScreen(
+              app: app,
+            ),
+            // child: InterstitialAdmob(),
           ),
         ),
       ),

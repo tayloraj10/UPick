@@ -44,13 +44,15 @@ class SessionChooserPage extends StatelessWidget {
                       shape: CircleBorder(),
                       elevation: 10,
                       color: Colors.red,
-                      child: Text(
-                        'Choose with Friends',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 26,
-                            fontFamily: 'NunitoSans',
-                            fontWeight: FontWeight.bold),
+                      child: Center(
+                        child: Text(
+                          'Choose with Friends',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       onPressed: chooseWithFriends,
                     ),
@@ -65,12 +67,14 @@ class SessionChooserPage extends StatelessWidget {
                       ),
                       elevation: 10,
                       color: Colors.blue,
-                      child: Text(
-                        'Choose by Yourself',
-                        style: TextStyle(
-                            fontSize: 26,
-                            fontFamily: 'NunitoSans',
-                            fontWeight: FontWeight.bold),
+                      child: Center(
+                        child: Text(
+                          'Choose by Yourself',
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                       onPressed: chooseByYourself,
                     ),

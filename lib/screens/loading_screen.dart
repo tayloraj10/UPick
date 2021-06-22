@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'home_screen.dart';
@@ -5,6 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
 
 class LoadingScreen extends StatefulWidget {
+  final FirebaseApp app;
+
+  LoadingScreen({this.app});
+
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }
@@ -22,20 +27,37 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<void> getBannerData() async {
-    final databaseReference = FirebaseDatabase.instance.reference();
-    List<Map<dynamic, dynamic>> bannerData = [];
+    // final databaseReference = FirebaseDatabase.instance.reference();
+    final databaseReference = FirebaseDatabase(
+            app: widget.app,
+            databaseURL: 'https://upick-775b7-bb6c3.firebaseio.com')
+        .reference();
+    List<Map<dynamic, dynamic>> homeBannerData = [];
+    List<Map<dynamic, dynamic>> extraBannerData = [];
     await databaseReference.once().then((DataSnapshot snapshot) {
       for (var b in snapshot.value) {
-        List<Map<dynamic, dynamic>> newData = [];
-        for (var a in b['Data']) {
-          newData.add(a);
+        if (b['FrontPage']) {
+          List<Map<dynamic, dynamic>> newData = [];
+          for (var a in b['Data']) {
+            newData.add(a);
+          }
+          b['Data'] = newData;
+          homeBannerData.add(b);
+        } else if (!b['FrontPage']) {
+          List<Map<dynamic, dynamic>> newData = [];
+          for (var a in b['Data']) {
+            newData.add(a);
+          }
+          b['Data'] = newData;
+          extraBannerData.add(b);
         }
-        b['Data'] = newData;
-        bannerData.add(b);
       }
     });
 
-    Provider.of<appData>(context, listen: false).updateBannerData(bannerData);
+    Provider.of<appData>(context, listen: false)
+        .updateHomeBannerData(homeBannerData);
+    Provider.of<appData>(context, listen: false)
+        .updateExtraBannerData(extraBannerData);
 
     Navigator.push(
       context,

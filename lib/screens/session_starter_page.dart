@@ -7,6 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
 
 class SessionStarterPage extends StatefulWidget {
+  final bool onlyJoin;
+
+  SessionStarterPage({this.onlyJoin = false});
+
   @override
   _SessionStarterPageState createState() => _SessionStarterPageState();
 }
@@ -147,20 +151,21 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
                   ),
                 ],
               ),
-              RaisedButton(
-                color: Colors.red,
-                onPressed: generateSession,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    'Generate Session',
-                    style: TextStyle(
-                        fontSize: 26,
-                        fontFamily: 'NunitoSans',
-                        fontWeight: FontWeight.bold),
+              if (!widget.onlyJoin)
+                RaisedButton(
+                  color: Colors.red,
+                  onPressed: generateSession,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      'Generate Session',
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontFamily: 'NunitoSans',
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
-              ),
               RaisedButton(
                 color: Colors.yellow,
                 onPressed: sessionCode5.length == 5 ? joinSession : null,
