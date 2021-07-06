@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
-import 'package:upick_test/screens/ad_mob.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/loading_screen.dart';
@@ -21,12 +20,6 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
-  // Future<InitializationStatus> _initGoogleMobileAds() {
-  //   return MobileAds.instance.initialize();
-  // }
-
   final FirebaseApp app;
 
   MyApp({this.app});
@@ -50,10 +43,12 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           // appBar: UPickAppBar(),
           body: SafeArea(
-            child: LoadingScreen(
+            child:
+                // StreamingIconTest()
+                // InterstitialAdmob(),
+                LoadingScreen(
               app: app,
             ),
-            // child: InterstitialAdmob(),
           ),
         ),
       ),

@@ -51,7 +51,12 @@ class _InterstitialAdmobState extends State<InterstitialAdmob> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(),
+      child: Container(
+        color: Colors.white,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
-import 'package:upick_test/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
+import 'package:upick_test/screens/movie_detail_page.dart';
 
 class LikedMoviesPage extends StatelessWidget {
   @override
@@ -113,7 +113,7 @@ class _LikedMoviesSessionState extends State<LikedMoviesSession> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text(
                         'Pick Again',
                         style: TextStyle(fontSize: 20),
@@ -168,13 +168,22 @@ class _LikedMoviesSessionState extends State<LikedMoviesSession> {
                                     ),
                                   ),
                                   Flexible(
-                                      child:
-                                          Image.network('${movie['Poster']}'))
+                                      child: Hero(
+                                          tag: movie['Title'],
+                                          child: Image.network(
+                                              '${movie['Poster']}')))
                                 ],
                               ),
                             ),
                             onTap: () {
-                              launchURL(imdbURL + movie['imdbID']);
+                              // launchURL(imdbURL + movie['imdbID']);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      MovieDetailPage(movieData: movie),
+                                ),
+                              );
                             },
                           ),
                         )
@@ -221,7 +230,7 @@ class _LikedMoviesState extends State<LikedMovies> {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20),
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           child: Text(
                             'Pick Again',
                             style: TextStyle(fontSize: 20),
@@ -268,13 +277,23 @@ class _LikedMoviesState extends State<LikedMovies> {
                                         ),
                                       ),
                                       Flexible(
-                                          child: Image.network(
-                                              '${movie['Poster']}'))
+                                          child: Hero(
+                                        tag: movie['Title'],
+                                        child:
+                                            Image.network('${movie['Poster']}'),
+                                      ))
                                     ],
                                   ),
                                 ),
                                 onTap: () {
-                                  launchURL(imdbURL + movie['imdbID']);
+                                  // launchURL(imdbURL + movie['imdbID']);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          MovieDetailPage(movieData: movie),
+                                    ),
+                                  );
                                 },
                               ),
                             )
@@ -287,7 +306,7 @@ class _LikedMoviesState extends State<LikedMovies> {
                     children: [
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 20),
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             child: Text(
                               'Pick Again',
                               style: TextStyle(fontSize: 20),

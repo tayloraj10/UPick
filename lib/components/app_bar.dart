@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:upick_test/screens/custom_categories_picker.dart';
 import 'package:upick_test/screens/extra.dart';
 import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/session_starter_page.dart';

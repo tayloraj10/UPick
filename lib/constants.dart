@@ -21,17 +21,18 @@ Map streaming_services = {
   'Netflix':
       'https://cdn.vox-cdn.com/thumbor/lfpXTYMyJpDlMevYNh0PfJu3M6Q=/39x0:3111x2048/920x613/filters:focal(39x0:3111x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/49901753/netflixlogo.0.0.png',
   'Disney Plus':
-      'hhttps://www.lowyat.net/wp-content/uploads/2018/11/Disney-Logo-700x464.jpg',
+      'https://www.lowyat.net/wp-content/uploads/2018/11/Disney-Logo-700x464.jpg',
   'Tubi TV': 'https://cdn.adrise.tv/image/app_icon_200x200.png',
   'HBO Max':
       'https://hbomax-images.warnermediacdn.com/2020-05/square%20social%20logo%20400%20x%20400_0.png',
   'fuboTV':
       'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco/ylh8b9kxr1eoptlsi9bv',
-  'Hoopla': 'https://burbanklibrary.org/sites/default/files/images/image.jpeg',
+  'Hoopla':
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRftrQk6qzDWUSH-_r_OziOAbG2CEMPNuErgwzRsn8LNRRT5LCANECWtFtW7BgRTGJtmJc&usqp=CAU',
   'Amazon Prime Video':
-      'https://reviewed-com-res.cloudinary.com/image/fetch/s--OCGmezmg--/b_white,c_limit,cs_srgb,f_auto,fl_progressive.strip_profile,g_center,q_auto,w_972/https://reviewed-production.s3.amazonaws.com/1590656678455/Amazon_Prime_Video_tips_1.jpg',
+      'https://www.androidcentral.com/sites/androidcentral.com/files/styles/w1600h900crop/public/article_images/2021/02/prime-video-logo.jpg',
   'Hulu':
-      'https://assetshuluimcom-a.akamaihd.net/h3o/facebook_share_thumb_default_hulu.jpg',
+      'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8d42f70b-cd9d-4a9a-b482-9eaa07d6d581/de01215-48409941-4c22-4fea-9684-69915ef15dc5.png/v1/fill/w_979,h_816,q_70,strp/hulu_new_logo_concept_by_superratchetlimited_de01215-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9ODUzIiwicGF0aCI6IlwvZlwvOGQ0MmY3MGItY2Q5ZC00YTlhLWI0ODItOWVhYTA3ZDZkNTgxXC9kZTAxMjE1LTQ4NDA5OTQxLTRjMjItNGZlYS05Njg0LTY5OTE1ZWYxNWRjNS5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7pcVplv2Pb0tNGJF7QAiHS2IIwpWUqEAGoeGmRIBICc',
   'VUDU Free': 'https://www.soda.com/wp-content/uploads/2020/06/Vudu.jpg',
   'Starz': 'https://www.soda.com/wp-content/uploads/2020/03/starz.jpg',
   'HBO Now':

@@ -22,7 +22,7 @@ top_rated_url = "https://api.themoviedb.org/3/movie/top_rated?api_key={}&languag
 # genre_json = json.loads(requests.get(genre_url).content)
 # pprint.pprint(genre_json)
 
-num_pages = 25
+num_pages = 15
 
 netflix_movies = [
     "13th",
@@ -439,7 +439,7 @@ def find_streaming_platforms(url):
                         m['title'])
                 else:
                     streaming_services[d] = [m['title']]
-            print(m['title'])
+            # print(m['title'])
             # print(data)
         page += 1
 
@@ -469,7 +469,7 @@ def generate_list(url, number_of_movies):
 # popular_list = generate_list(popular_url, 10000)
 # top_rated_list = generate_list(top_rated_url, 10000)
 
-popular_list = generate_list(popular_url, 1000)
+popular_list = generate_list(popular_url, 5000)
 
 
 def populate_streaming_services(movie_list):
@@ -487,7 +487,7 @@ def populate_streaming_services(movie_list):
 def generate_streaming_services_list(completed_streaming_list):
     streaming_services = {}
     for t in completed_streaming_list:
-        print(t)
+        # print(t)
         for s in t['streaming']:
             service = list(s.keys())[0]
             if service in streaming_services:
@@ -630,6 +630,7 @@ def create_banner_data():
 
 
 d = create_banner_data()
+
 
 # d_json = json.dumps({'data': d})
 # print(d_json)
