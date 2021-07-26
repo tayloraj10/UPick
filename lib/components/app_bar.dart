@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/screens/extra.dart';
 import 'package:upick_test/screens/home_screen.dart';
+import 'package:upick_test/screens/home_screen_old.dart';
 import 'package:upick_test/screens/session_starter_page.dart';
 
 class UPickAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,6 +21,7 @@ class UPickAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.blue,
       automaticallyImplyLeading: showBack,
       centerTitle: true,
       elevation: 10,

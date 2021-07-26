@@ -44,6 +44,23 @@ Map streaming_services = {
       'https://yt3.ggpht.com/ytc/AAUvwnhwDT9EGrgkCvkeEZ5cQ0ZGJB44UuF0KNuyll1C4g=s900-c-k-c0x00ffffff-no-rj'
 };
 
+Map streaming_services_icons = {
+  'Netflix': 'netflix.png',
+  'Disney Plus': 'disney_plus.jpg',
+  'Tubi TV': 'tubi.png',
+  'HBO Max': 'hbo_max.png',
+  'fuboTV': 'fubo.png',
+  'Hoopla': 'hoopla.png',
+  'Amazon Prime Video': 'prime_video.jpg',
+  'Hulu': 'hulu.jpg',
+  'VUDU Free': 'vudu.jpg',
+  'Starz': 'starz.jpg',
+  'HBO Now': 'hbo_now.jpg',
+  'Peacock Premium': 'peacock.jpg',
+  'Crackle': 'crackle.png',
+  'Sling TV': 'sling.jpg'
+};
+
 void launchURL(String url) async {
   if (await canLaunch(url)) {
     await launch(url);

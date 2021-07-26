@@ -16,8 +16,10 @@ class StreamingSection extends StatelessWidget {
       if (streaming_services.containsKey(e.keys.toList()[0].toString())) {
         icons.add(
           StreamingIcon(
-            url: streaming_services[e.keys.toList()[0].toString()],
+            // url: streaming_services[e.keys.toList()[0].toString()],
             link: e.values.toList()[0],
+            image_name:
+                "assets/streaming_icons/${streaming_services_icons[e.keys.toList()[0].toString()]}",
           ),
         );
       }

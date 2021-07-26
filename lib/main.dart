@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
 import 'package:upick_test/screens/home_screen.dart';
+import 'package:upick_test/screens/home_screen_old.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/loading_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:upick_test/screens/streaming_icon_test.dart';
 import 'package:upick_test/screens/swiper.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -12,17 +14,17 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final FirebaseApp app = await Firebase.initializeApp();
+  // final FirebaseApp app = await Firebase.initializeApp();
   MobileAds.instance.initialize();
   runApp(MyApp(
-    app: app,
-  ));
+      // app: app,
+      ));
 }
 
 class MyApp extends StatelessWidget {
-  final FirebaseApp app;
-
-  MyApp({this.app});
+  // final FirebaseApp app;
+  //
+  // MyApp({this.app});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/home': (context) => HomeScreen(),
+          '/home': (context) => HomeScreenOld(),
           '/swipe': (context) => Swiper(),
           '/liked': (context) => LikedMovies(),
           '/loading': (context) => LoadingScreen()
@@ -46,9 +48,10 @@ class MyApp extends StatelessWidget {
             child:
                 // StreamingIconTest()
                 // InterstitialAdmob(),
-                LoadingScreen(
-              app: app,
-            ),
+                //     LoadingScreen(
+                //   app: app,
+                // ),
+                LoadingScreen(),
           ),
         ),
       ),

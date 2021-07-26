@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:upick_test/constants.dart';
 
@@ -10,6 +12,7 @@ class appData extends ChangeNotifier {
   int userNum = 0;
   String sessionCode = '';
   String sessionID = '';
+  var firebase;
 
   List getNMovies(int n) {
     return getRandomMovies(n, movieData);
@@ -17,6 +20,28 @@ class appData extends ChangeNotifier {
 
   get getMovies {
     return movieData;
+  }
+
+  void updateFirebaseApp(FirebaseApp newApp) {
+    firebase = FirebaseDatabase(
+            app: newApp, databaseURL: 'https://upick-movie-data.firebaseio.com')
+        .reference();
+    notifyListeners();
+  }
+
+  void updateMoviesPopular() async {
+    var data = await firebase
+        .orderByChild('popular')
+        .equalTo(true)
+        .once()
+        .then((DataSnapshot snapshot) {
+      print(snapshot.value.length);
+    });
+
+    // await firebase.once().then((DataSnapshot snapshot) {
+    //   print(snapshot.value);
+    // });
+    notifyListeners();
   }
 
   void updateHomeBannerData(List<Map<dynamic, dynamic>> newData) {

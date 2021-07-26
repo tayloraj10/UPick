@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'home_screen.dart';
+import 'package:upick_test/screens/home_screen.dart';
+import 'home_screen_old.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
 
@@ -18,12 +19,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    getBannerData();
+    getData();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  Future<void> getData() async {
+    final FirebaseApp app = await Firebase.initializeApp();
+    Provider.of<appData>(context, listen: false).updateFirebaseApp(app);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ),
+    );
   }
 
   Future<void> getBannerData() async {

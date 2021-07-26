@@ -1,16 +1,15 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_category_banner.dart';
 import 'package:upick_test/models/app_data.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreenOld extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: UPickAppBar(
-          showBack: false, showJoinSession: true, showExtraPage: false),
+          showBack: false, showJoinSession: true, showExtraPage: true),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -32,32 +31,13 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    MovieCategoryBanner(
-                      title: 'Major Streaming Services',
-                      imageName: 'streaming_services.png',
-                      type: 'streaming',
-                    ),
-                    MovieCategoryBanner(
-                      title: 'Pick Your Own',
-                      imageName: 'custom_categories.jpeg',
-                    ),
-
-                    MovieCategoryBanner(
-                      title: 'Most Popular',
-                      imageName: 'most_popular.jpg',
-                      type: 'popular',
-                    ),
-                    MovieCategoryBanner(
-                      title: 'Top Rated',
-                      imageName: 'top_rated.jpg',
-                    )
-                    // for (var banner
-                    //     in Provider.of<appData>(context).homeBanners)
-                    //   MovieCategoryBanner(
-                    //     title: banner['Title'],
-                    //     imageUrl: banner['ImageUrl'],
-                    //     data: banner['Data'],
-                    //   ),
+                    for (var banner
+                        in Provider.of<appData>(context).homeBanners)
+                      MovieCategoryBanner(
+                        title: banner['Title'],
+                        imageUrl: banner['ImageUrl'],
+                        data: banner['Data'],
+                      ),
                     // MovieCategoryBanner(
                     //   title: 'Custom Categories',
                     //   imageUrl: customCategoriesUrl,

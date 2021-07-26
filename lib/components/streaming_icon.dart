@@ -4,8 +4,9 @@ import 'package:upick_test/constants.dart';
 class StreamingIcon extends StatelessWidget {
   final String url;
   final String link;
+  final String image_name;
 
-  StreamingIcon({@required this.url, @required this.link});
+  StreamingIcon({@required this.url, @required this.image_name, this.link});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,9 @@ class StreamingIcon extends StatelessWidget {
                   offset: Offset(5.0, 5.0))
             ],
             image: DecorationImage(
-              fit: BoxFit.fill,
-              image: NetworkImage(url),
-            ),
+                fit: BoxFit.fill,
+                // image: NetworkImage(url),
+                image: AssetImage(image_name)),
           ),
         ),
       ),

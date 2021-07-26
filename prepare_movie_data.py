@@ -469,7 +469,7 @@ def generate_list(url, number_of_movies):
 # popular_list = generate_list(popular_url, 10000)
 # top_rated_list = generate_list(top_rated_url, 10000)
 
-popular_list = generate_list(popular_url, 5000)
+# popular_list = generate_list(popular_url, 5000)
 
 
 def populate_streaming_services(movie_list):
@@ -498,8 +498,8 @@ def generate_streaming_services_list(completed_streaming_list):
     return streaming_services
 
 
-streaming_services = generate_streaming_services_list(
-    populate_streaming_services(popular_list))
+# streaming_services = generate_streaming_services_list(
+#     populate_streaming_services(popular_list))
 
 
 def print_by_name(streaming_services):
@@ -629,7 +629,7 @@ def create_banner_data():
     return bannerData
 
 
-d = create_banner_data()
+# d = create_banner_data()
 
 
 # d_json = json.dumps({'data': d})
