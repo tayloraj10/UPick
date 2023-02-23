@@ -3,7 +3,7 @@ import 'package:upick_test/components/streaming_icon.dart';
 import 'package:upick_test/constants.dart';
 
 class StreamingSection extends StatelessWidget {
-  List streamingData;
+  final List streamingData;
 
   StreamingSection({@required this.streamingData});
 
@@ -13,13 +13,13 @@ class StreamingSection extends StatelessWidget {
       // print(e.keys.toList()[0].toString());
       // print(streaming_services[e.keys.toList()[0].toString()]);
       // print(e.values.toList()[0]);
-      if (streaming_services.containsKey(e.keys.toList()[0].toString())) {
+      if (streamingServices.containsKey(e.keys.toList()[0].toString())) {
         icons.add(
           StreamingIcon(
             // url: streaming_services[e.keys.toList()[0].toString()],
-            link: e.values.toList()[0],
-            image_name:
-                "assets/streaming_icons/${streaming_services_icons[e.keys.toList()[0].toString()]}",
+            url: e.values.toList()[0],
+            imageName:
+                "assets/streaming_icons/${streamingServicesIcons[e.keys.toList()[0].toString()]}",
           ),
         );
       }

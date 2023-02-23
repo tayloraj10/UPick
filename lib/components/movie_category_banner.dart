@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
-import 'package:upick_test/screens/custom_categories_picker.dart';
 import 'package:upick_test/screens/major_streaming_providers.dart';
-import 'package:upick_test/screens/session_chooser_page.dart';
 
 class MovieCategoryBanner extends StatelessWidget {
-  String title;
-  String imageName;
-  String imageUrl;
-  String tooltip;
-  String type;
-  List<Map<dynamic, dynamic>> data;
+  final String title;
+  final String imageName;
+  final String imageUrl;
+  final String tooltip;
+  final String type;
+  final List<Map<dynamic, dynamic>> data;
 
   MovieCategoryBanner(
-      {@required this.title,
-      @required this.imageName,
-      @required this.type = 'regular',
+      {this.title,
+      this.imageName,
+      this.type = 'regular',
       this.imageUrl,
       this.data,
       this.tooltip});
@@ -38,7 +36,7 @@ class MovieCategoryBanner extends StatelessWidget {
               );
             } else if (type == 'filter') {
             } else if (type == 'popular') {
-              Provider.of<appData>(context, listen: false)
+              Provider.of<AppData>(context, listen: false)
                   .updateMoviesPopular();
               // Navigator.push(
               //   context,
@@ -73,7 +71,7 @@ class MovieCategoryBanner extends StatelessWidget {
               //   fit: BoxFit.fill,
               // ),
               Image.asset(
-                "assets/images/${imageName}",
+                "assets/images/$imageName",
                 fit: BoxFit.fill,
               ),
               Positioned(

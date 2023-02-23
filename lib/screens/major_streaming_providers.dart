@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_category_banner.dart';
-import 'package:upick_test/models/app_data.dart';
 
 class MajorStreamingProviders extends StatelessWidget {
   @override

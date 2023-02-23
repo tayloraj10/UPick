@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:upick_test/constants.dart';
 
-class appData extends ChangeNotifier {
+class AppData extends ChangeNotifier {
   List<Map<dynamic, dynamic>> homeBanners = [];
   List<Map<dynamic, dynamic>> extraBanners = [];
   List<Map<dynamic, dynamic>> movieData = [];
@@ -30,7 +30,7 @@ class appData extends ChangeNotifier {
   }
 
   void updateMoviesPopular() async {
-    var data = await firebase
+    await firebase
         .orderByChild('popular')
         .equalTo(true)
         .once()

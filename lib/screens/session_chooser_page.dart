@@ -18,7 +18,7 @@ class SessionChooserPage extends StatelessWidget {
     }
 
     void chooseByYourself() {
-      Provider.of<appData>(context, listen: false).updateIsSession(false);
+      Provider.of<AppData>(context, listen: false).updateIsSession(false);
       Navigator.push(
         context,
         MaterialPageRoute(

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:upick_test/components/movie_category_banner.dart';
-import 'package:upick_test/models/app_data.dart';
 import 'package:upick_test/constants.dart';
+
+import '../models/app_data.dart';
 
 class ExtraScreen extends StatelessWidget {
   @override
@@ -32,7 +33,7 @@ class ExtraScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     for (var banner
-                        in Provider.of<appData>(context).extraBanners)
+                        in Provider.of<AppData>(context).extraBanners)
                       MovieCategoryBanner(
                         title: banner['Title'],
                         imageUrl: banner['ImageUrl'],

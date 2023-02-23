@@ -25,8 +25,8 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
   @override
   Widget build(BuildContext context) {
     void generateSession() {
-      var session = firestore.add({
-        'data': Provider.of<appData>(context, listen: false).getNMovies(10),
+      firestore.add({
+        'data': Provider.of<AppData>(context, listen: false).getNMovies(10),
         'likes': {},
       }).then((value) {
         setState(() {
@@ -41,8 +41,7 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
       var currentSessionData;
       var currentSessionId;
       int userCount;
-      var currentSession =
-          firestore.where('id', isEqualTo: sessionCode5).get().then((value) {
+      firestore.where('id', isEqualTo: sessionCode5).get().then((value) {
         bool empty = value.docs.isEmpty;
         if (empty) {
           final snackBar = SnackBar(
@@ -79,9 +78,9 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
             newDataList.add(newData);
           }
 
-          Provider.of<appData>(context, listen: false)
+          Provider.of<AppData>(context, listen: false)
               .updateMovieData(newDataList);
-          Provider.of<appData>(context, listen: false).updateSessionInfo(
+          Provider.of<AppData>(context, listen: false).updateSessionInfo(
               newSession: true,
               newUserNum: userCount + 1,
               newSessionCode: currentSessionData['id'],

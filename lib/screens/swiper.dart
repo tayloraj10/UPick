@@ -3,7 +3,6 @@ import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:upick_test/constants.dart';
 import 'package:upick_test/screens/ad_mob.dart';
-import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/movie_detail_page.dart';
 import 'package:upick_test/utilities/fetch_url.dart';
 import 'package:upick_test/components/app_bar.dart';
@@ -31,20 +30,20 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
 
   void setMovieData() {
     setState(() {
-      movieData = Provider.of<appData>(context, listen: false).getNMovies(10);
+      movieData = Provider.of<AppData>(context, listen: false).getNMovies(10);
     });
   }
 
   Future<void> setFirestoreData(List likedMoviesList) async {
     await firestore
         .where('id',
-            isEqualTo: Provider.of<appData>(context, listen: false).sessionCode)
+            isEqualTo: Provider.of<AppData>(context, listen: false).sessionCode)
         .get()
         .then((value) {
       setState(() {
         firestoreData = value.docs.single.data();
         firestoreData['likes'][
-                'user${Provider.of<appData>(context, listen: false).userNum}'] =
+                'user${Provider.of<AppData>(context, listen: false).userNum}'] =
             likedMoviesList;
       });
     });
@@ -58,7 +57,7 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
 
   void nextMovie() async {
     if (movieIndex == movieData.length - 1) {
-      if (Provider.of<appData>(context, listen: false).isSession) {
+      if (Provider.of<AppData>(context, listen: false).isSession) {
         setState(() {
           swipingFinished = true;
         });
@@ -72,11 +71,11 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
         await setFirestoreData(likedMoviesList);
 
         firestore
-            .doc(Provider.of<appData>(context, listen: false).sessionID)
+            .doc(Provider.of<AppData>(context, listen: false).sessionID)
             .update({'likes': firestoreData['likes']});
       }
 
-      Provider.of<appData>(context, listen: false)
+      Provider.of<AppData>(context, listen: false)
           .updateLikedMovies(likedMovies);
 
       Navigator.push(
@@ -130,11 +129,11 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Provider.of<appData>(context).isSession
+                                  Provider.of<AppData>(context).isSession
                                       ? Column(
                                           children: [
                                             SelectableText(
-                                              'Session ID: ${Provider.of<appData>(context).sessionID.substring(0, 5)}',
+                                              'Session ID: ${Provider.of<AppData>(context).sessionID.substring(0, 5)}',
                                               style: TextStyle(fontSize: 20),
                                             ),
                                             SizedBox(

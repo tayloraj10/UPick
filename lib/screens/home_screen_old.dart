@@ -32,7 +32,7 @@ class HomeScreenOld extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     for (var banner
-                        in Provider.of<appData>(context).homeBanners)
+                        in Provider.of<AppData>(context).homeBanners)
                       MovieCategoryBanner(
                         title: banner['Title'],
                         imageUrl: banner['ImageUrl'],

@@ -5,7 +5,7 @@ import 'package:upick_test/components/streaming_section.dart';
 import 'package:upick_test/constants.dart';
 
 class MovieDetailPage extends StatelessWidget {
-  Map movieData;
+  final Map movieData;
 
   MovieDetailPage({@required this.movieData});
 

@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,14 +14,14 @@ class LikedMoviesPage extends StatelessWidget {
     return Scaffold(
       appBar: UPickAppBar(showBack: false),
       body: Container(
-        child: Provider.of<appData>(context).isSession
+        child: Provider.of<AppData>(context).isSession
             ? LikedMoviesSession(
-                userNum: Provider.of<appData>(context).userNum,
-                sessionCode: Provider.of<appData>(context).sessionCode,
-                sessionID: Provider.of<appData>(context).sessionID,
+                userNum: Provider.of<AppData>(context).userNum,
+                sessionCode: Provider.of<AppData>(context).sessionCode,
+                sessionID: Provider.of<AppData>(context).sessionID,
               )
             : LikedMovies(
-                likedMovies: Provider.of<appData>(context).likedMovies,
+                likedMovies: Provider.of<AppData>(context).likedMovies,
               ),
       ),
     );
@@ -28,9 +29,9 @@ class LikedMoviesPage extends StatelessWidget {
 }
 
 class LikedMoviesSession extends StatefulWidget {
-  int userNum;
-  String sessionCode;
-  String sessionID;
+  final int userNum;
+  final String sessionCode;
+  final String sessionID;
 
   LikedMoviesSession({this.userNum, this.sessionCode, this.sessionID});
 

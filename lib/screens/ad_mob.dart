@@ -13,6 +13,7 @@ class _InterstitialAdmobState extends State<InterstitialAdmob> {
 
   @override
   void initState() {
+    super.initState();
     _interstitialAd = InterstitialAd(
       adUnitId: AdManager.interstitialAdUnitId,
       request: AdRequest(),

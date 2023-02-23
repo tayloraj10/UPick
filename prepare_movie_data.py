@@ -594,7 +594,7 @@ def fetch_movie_data(movies):
     # print(errors)
     return movie_data
 
-
+streaming_services = ''
 def create_banner_data():
     bannerData = []
     for cat in categories:

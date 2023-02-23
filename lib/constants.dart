@@ -17,7 +17,7 @@ const String customCategoriesUrl =
 const String noPosterUrl =
     'https://linnea.com.ar/wp-content/uploads/2018/09/404PosterNotFoundReverse.jpg';
 
-Map streaming_services = {
+Map streamingServices = {
   'Netflix':
       'https://cdn.vox-cdn.com/thumbor/lfpXTYMyJpDlMevYNh0PfJu3M6Q=/39x0:3111x2048/920x613/filters:focal(39x0:3111x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/49901753/netflixlogo.0.0.png',
   'Disney Plus':
@@ -44,7 +44,7 @@ Map streaming_services = {
       'https://yt3.ggpht.com/ytc/AAUvwnhwDT9EGrgkCvkeEZ5cQ0ZGJB44UuF0KNuyll1C4g=s900-c-k-c0x00ffffff-no-rj'
 };
 
-Map streaming_services_icons = {
+Map streamingServicesIcons = {
   'Netflix': 'netflix.png',
   'Disney Plus': 'disney_plus.jpg',
   'Tubi TV': 'tubi.png',

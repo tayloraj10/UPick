@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/screens/extra.dart';
 import 'package:upick_test/screens/home_screen.dart';
-import 'package:upick_test/screens/home_screen_old.dart';
 import 'package:upick_test/screens/session_starter_page.dart';
 
 class UPickAppBar extends StatelessWidget implements PreferredSizeWidget {
-  bool showBack;
-  bool showJoinSession;
-  bool showExtraPage;
+  final bool showBack;
+  final bool showJoinSession;
+  final bool showExtraPage;
 
   @override
   final Size preferredSize;

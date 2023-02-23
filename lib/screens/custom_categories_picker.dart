@@ -241,7 +241,7 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
                         List<Map<dynamic, dynamic>> movieData =
                             await getMovieData(movieTitles);
 
-                        Provider.of<appData>(context, listen: false)
+                        Provider.of<AppData>(context, listen: false)
                             .updateMovieData(movieData);
 
                         setState(() {

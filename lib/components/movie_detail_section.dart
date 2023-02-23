@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MovieDetailSection extends StatelessWidget {
-  String title;
-  String text;
+  final String title;
+  final String text;
 
   MovieDetailSection({@required this.title, @required this.text});
 
