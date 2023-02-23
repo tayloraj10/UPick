@@ -207,8 +207,10 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
                     SizedBox(
                       height: 40,
                     ),
-                    RaisedButton(
-                      color: Colors.red,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
                       onPressed: () async {
                         setState(() {
                           loading = true;

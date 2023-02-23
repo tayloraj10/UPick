@@ -40,10 +40,11 @@ class SessionChooserPage extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(20),
-                    child: RaisedButton(
-                      shape: CircleBorder(),
-                      elevation: 10,
-                      color: Colors.red,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          elevation: 10,
+                          shape: CircleBorder()),
                       child: Center(
                         child: Text(
                           'Choose with Friends',
@@ -61,12 +62,13 @@ class SessionChooserPage extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(20),
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      elevation: 10,
-                      color: Colors.blue,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          )),
                       child: Center(
                         child: Text(
                           'Choose by Yourself',

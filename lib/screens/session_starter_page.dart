@@ -152,8 +152,10 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
                 ],
               ),
               if (!widget.onlyJoin)
-                RaisedButton(
-                  color: Colors.red,
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
                   onPressed: generateSession,
                   child: Padding(
                     padding: const EdgeInsets.all(12),
@@ -166,8 +168,10 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
                     ),
                   ),
                 ),
-              RaisedButton(
-                color: Colors.yellow,
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow,
+                ),
                 onPressed: sessionCode5.length == 5 ? joinSession : null,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
