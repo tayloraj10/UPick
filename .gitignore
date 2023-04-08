@@ -8,6 +8,8 @@
 .buildlog/
 .history
 .svn/
+todo.txt
+settings.json
 
 # IntelliJ related
 *.iml

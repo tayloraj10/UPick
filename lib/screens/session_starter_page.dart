@@ -159,7 +159,7 @@ class _SessionStarterPageState extends State<SessionStarterPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Text(
-                      'Generate Session',
+                      'Start a New Session',
                       style: TextStyle(
                           fontSize: 26,
                           fontFamily: 'NunitoSans',

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,17 @@ class AppData extends ChangeNotifier {
   String sessionCode = '';
   String sessionID = '';
   var firebase;
+  var moviesDatabase = FirebaseFirestore.instance.collection('movies');
+  bool loading = false;
+
+  void updateLoading(bool loadingStatus) {
+    loading = loadingStatus;
+    notifyListeners();
+  }
+
+  get getLoading {
+    return loading;
+  }
 
   List getNMovies(int n) {
     return getRandomMovies(n, movieData);
@@ -29,18 +41,88 @@ class AppData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateMoviesPopular() async {
-    await firebase
-        .orderByChild('popular')
-        .equalTo(true)
-        .once()
-        .then((DataSnapshot snapshot) {
-      print(snapshot.value.length);
-    });
+  void filterAllMovies(
+      String streaming, String genre, String rating, double score) async {
+    movieData = [];
+    await moviesDatabase.get().then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          bool meetsFilters = true;
+          var data = docSnapshot.data();
+          // print(docSnapshot.data());
+          if (streaming != null) {
+            print(streaming);
+            if (!(data['streaming_options'].contains(streaming))) {
+              meetsFilters = false;
+            }
+          }
+          if (genre != null) {
+            if (!(data['Genres'].contains(genre))) {
+              meetsFilters = false;
+            }
+          }
+          if (rating != null) {
+            if (!(data['Rated'].contains(rating))) {
+              meetsFilters = false;
+            }
+          }
+          if (score != null) {
+            if (score == 5) score = 4.5;
+            if (data['Rating'] != 'N/A' &&
+                !(double.parse(data['Rating']) >= score * 2)) {
+              meetsFilters = false;
+            } else if (data['Rating'] == 'N/A') {
+              meetsFilters = false;
+            }
+          }
+          if (meetsFilters) {
+            movieData.add(docSnapshot.data());
+          }
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    print(movieData.length);
+    notifyListeners();
+  }
 
-    // await firebase.once().then((DataSnapshot snapshot) {
-    //   print(snapshot.value);
-    // });
+  void updateMoviesMain(String type) async {
+    movieData = [];
+    await moviesDatabase.where(type, isEqualTo: true).get().then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          movieData.add(docSnapshot.data());
+          // print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    notifyListeners();
+  }
+
+  void updateMoviesStreaming(String type) async {
+    Map typeMap = {
+      'netflix': 'Netflix',
+      'hulu': 'Hulu',
+      'hbo': 'HBO Max',
+      'amazon prime': 'Amazon Prime Video'
+    };
+    movieData = [];
+    await moviesDatabase
+        .where('streaming_options', arrayContains: typeMap[type])
+        .get()
+        .then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          movieData.add(docSnapshot.data());
+          // print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
     notifyListeners();
   }
 

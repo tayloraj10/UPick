@@ -1,7 +1,11 @@
+// ignore_for_file: await_only_futures
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
+import 'package:upick_test/screens/custom_categories_picker.dart';
 import 'package:upick_test/screens/major_streaming_providers.dart';
+import 'package:upick_test/screens/session_chooser_page.dart';
 
 class MovieCategoryBanner extends StatelessWidget {
   final String title;
@@ -10,6 +14,7 @@ class MovieCategoryBanner extends StatelessWidget {
   final String tooltip;
   final String type;
   final List<Map<dynamic, dynamic>> data;
+  final widgetContext;
 
   MovieCategoryBanner(
       {this.title,
@@ -17,7 +22,8 @@ class MovieCategoryBanner extends StatelessWidget {
       this.type = 'regular',
       this.imageUrl,
       this.data,
-      this.tooltip});
+      this.tooltip,
+      this.widgetContext});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class MovieCategoryBanner extends StatelessWidget {
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: GestureDetector(
-          onTap: () {
+          onTap: () async {
             if (type == 'streaming') {
               Navigator.push(
                 context,
@@ -35,16 +41,54 @@ class MovieCategoryBanner extends StatelessWidget {
                 ),
               );
             } else if (type == 'filter') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CustomCategoriesPicker(),
+                ),
+              );
             } else if (type == 'popular') {
-              Provider.of<AppData>(context, listen: false)
-                  .updateMoviesPopular();
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => SessionChooserPage(),
-              //   ),
-              // );
+              Provider.of<AppData>(widgetContext, listen: false)
+                  .updateLoading(true);
+              await Provider.of<AppData>(widgetContext, listen: false)
+                  .updateMoviesMain('popular');
+              Provider.of<AppData>(widgetContext, listen: false)
+                  .updateLoading(false);
+              Navigator.push(
+                widgetContext,
+                MaterialPageRoute(
+                  builder: (widgetContext) => SessionChooserPage(),
+                ),
+              );
+            } else if (type == 'top rated') {
+              Provider.of<AppData>(widgetContext, listen: false)
+                  .updateLoading(true);
+              await Provider.of<AppData>(widgetContext, listen: false)
+                  .updateMoviesMain('top_rated');
+              Provider.of<AppData>(widgetContext, listen: false)
+                  .updateLoading(false);
+              Navigator.push(
+                widgetContext,
+                MaterialPageRoute(
+                  builder: (widgetContext) => SessionChooserPage(),
+                ),
+              );
+            } else if (['netflix', 'hulu', 'hbo', 'amazon prime']
+                .contains(type)) {
+              Provider.of<AppData>(widgetContext, listen: false)
+                  .updateLoading(true);
+              await Provider.of<AppData>(widgetContext, listen: false)
+                  .updateMoviesStreaming(type);
+              Provider.of<AppData>(widgetContext, listen: false)
+                  .updateLoading(false);
+              Navigator.push(
+                widgetContext,
+                MaterialPageRoute(
+                  builder: (widgetContext) => SessionChooserPage(),
+                ),
+              );
             }
+
             // if (title == 'Custom Categories')
             //   Navigator.push(
             //     context,

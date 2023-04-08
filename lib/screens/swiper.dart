@@ -108,213 +108,272 @@ class _SwiperState extends State<Swiper> with TickerProviderStateMixin {
     CardController controller; //Use this to trigger swap.
     return Scaffold(
         appBar: UPickAppBar(),
-        body: swipingFinished
-            ? Center(child: CircularProgressIndicator())
-            : Column(
-                children: [
-                  Expanded(
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: backgroundColor,
+        body: movieData.length == 0
+            ? Container(
+                child: Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'No movies were found for this selection',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'NunitoSans',
+                          fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'Take Me Back',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontFamily: 'NunitoSans',
+                              fontWeight: FontWeight.bold),
                         ),
-                        child: Scrollbar(
-                          child: SingleChildScrollView(
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight:
-                                    MediaQuery.of(context).size.height - 50,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Provider.of<AppData>(context).isSession
-                                      ? Column(
-                                          children: [
-                                            SelectableText(
-                                              'Session ID: ${Provider.of<AppData>(context).sessionID.substring(0, 5)}',
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                            SizedBox(
-                                              height: 10,
+                      ),
+                    ),
+                  ],
+                )),
+              )
+            : swipingFinished
+                ? Center(child: CircularProgressIndicator())
+                : Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: backgroundColor,
+                            ),
+                            child: Scrollbar(
+                              child: SingleChildScrollView(
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    minHeight:
+                                        MediaQuery.of(context).size.height - 50,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Provider.of<AppData>(context).isSession
+                                          ? Column(
+                                              children: [
+                                                SelectableText(
+                                                  'Session ID: ${Provider.of<AppData>(context).sessionID.substring(0, 5)}',
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                )
+                                              ],
                                             )
-                                          ],
-                                        )
-                                      : Container(),
-                                  GestureDetector(
-                                    child: Text(
-                                      movieData[movieIndex]['Title'] ?? '',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 32,
-                                          fontFamily: 'NunitoSans',
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.lightBlueAccent,
-                                          decoration: TextDecoration.underline),
-                                    ),
-                                    onTap: () {
-                                      launchURL(imdbURL +
-                                          movieData[movieIndex]['imdbID']);
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Text.rich(
-                                      TextSpan(
-                                        text: (movieData[movieIndex]['Plot'] ??
-                                                    '') ==
-                                                'N/A'
-                                            ? 'No plot available'
-                                            : movieData[movieIndex]['Plot'] ??
-                                                '',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontFamily: 'NunitoSans',
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 4,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => MovieDetailPage(
-                                              movieData: movieData[movieIndex]),
+                                          : Container(),
+                                      GestureDetector(
+                                        child: Text(
+                                          movieData[movieIndex]['Title'] ?? '',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontSize: 32,
+                                              fontFamily: 'NunitoSans',
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.lightBlueAccent,
+                                              decoration:
+                                                  TextDecoration.underline),
                                         ),
-                                      );
-                                    },
-                                    child: Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.5,
-                                      child: TinderSwapCard(
-                                        orientation: AmassOrientation.BOTTOM,
-                                        totalNum: movieData.length,
-                                        stackNum: 2,
-                                        swipeEdge: 4.0,
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                        maxHeight:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                        minWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        minHeight:
-                                            MediaQuery.of(context).size.width *
-                                                0.8,
-                                        cardBuilder: (context, index) {
-                                          // print('index ${index}');
-                                          return Card(
-                                            child: Hero(
-                                              child: Image.network(
-                                                  '${movieData[index]['Poster']}' ==
-                                                          'N/A'
-                                                      ? noPosterUrl
-                                                      : '${movieData[index]['Poster']}'),
-                                              tag: movieData[index]['Title'],
+                                        onTap: () {
+                                          launchURL(imdbURL +
+                                              movieData[movieIndex]['imdbID']);
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Text.rich(
+                                          TextSpan(
+                                            text: (movieData[movieIndex]
+                                                            ['Plot'] ??
+                                                        '') ==
+                                                    'N/A'
+                                                ? 'No plot available'
+                                                : movieData[movieIndex]
+                                                        ['Plot'] ??
+                                                    '',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: 'NunitoSans',
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 4,
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MovieDetailPage(
+                                                      movieData: movieData[
+                                                          movieIndex]),
                                             ),
                                           );
                                         },
-                                        cardController: controller =
-                                            CardController(),
-                                        swipeUpdateCallback:
-                                            (DragUpdateDetails details,
-                                                Alignment align) {
-                                          /// Get swiping card's alignment
-                                          // print(align);
-                                          if (align.x < -1) {
-                                            // print("Card is LEFT swiping");
-                                            setState(() {
-                                              backgroundColor =
-                                                  Colors.redAccent;
-                                            });
-                                          } else if (align.x > 1) {
-                                            // print("Card is RIGHT swiping");
-                                            setState(() {
-                                              backgroundColor =
-                                                  Colors.lightGreenAccent;
-                                            });
-                                          } else {
-                                            resetBackgroundColor();
-                                          }
-                                        },
-                                        swipeCompleteCallback:
-                                            (CardSwipeOrientation orientation,
-                                                int index) {
-                                          // print(orientation.toString());
-                                          if (orientation ==
-                                              CardSwipeOrientation.RECOVER) {
-                                            // print("Card Recovered");
-                                            resetBackgroundColor();
-                                          } else if (orientation ==
-                                              CardSwipeOrientation.LEFT) {
-                                            // print("Card is LEFT swiping");
-                                            resetBackgroundColor();
-                                            nextMovie();
-                                          } else if (orientation ==
-                                              CardSwipeOrientation.RIGHT) {
-                                            // print("Card is RIGHT swiping");
-                                            resetBackgroundColor();
-                                            likedMovie();
-                                            nextMovie();
-                                          }
-                                        },
+                                        child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.5,
+                                          child: TinderSwapCard(
+                                            orientation:
+                                                AmassOrientation.BOTTOM,
+                                            totalNum: movieData.length,
+                                            stackNum: 2,
+                                            swipeEdge: 4.0,
+                                            maxWidth: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            maxHeight: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            minWidth: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.8,
+                                            minHeight: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.8,
+                                            cardBuilder: (context, index) {
+                                              // print('index ${index}');
+                                              return Card(
+                                                child: Hero(
+                                                  child: Image.network(
+                                                      '${movieData[index]['Poster']}' ==
+                                                              'N/A'
+                                                          ? noPosterUrl
+                                                          : '${movieData[index]['Poster']}'),
+                                                  tag: movieData[index]
+                                                      ['Title'],
+                                                ),
+                                              );
+                                            },
+                                            cardController: controller =
+                                                CardController(),
+                                            swipeUpdateCallback:
+                                                (DragUpdateDetails details,
+                                                    Alignment align) {
+                                              /// Get swiping card's alignment
+                                              // print(align);
+                                              if (align.x < -1) {
+                                                // print("Card is LEFT swiping");
+                                                setState(() {
+                                                  backgroundColor =
+                                                      Colors.redAccent;
+                                                });
+                                              } else if (align.x > 1) {
+                                                // print("Card is RIGHT swiping");
+                                                setState(() {
+                                                  backgroundColor =
+                                                      Colors.lightGreenAccent;
+                                                });
+                                              } else {
+                                                resetBackgroundColor();
+                                              }
+                                            },
+                                            swipeCompleteCallback:
+                                                (CardSwipeOrientation
+                                                        orientation,
+                                                    int index) {
+                                              // print(orientation.toString());
+                                              if (orientation ==
+                                                  CardSwipeOrientation
+                                                      .RECOVER) {
+                                                // print("Card Recovered");
+                                                resetBackgroundColor();
+                                              } else if (orientation ==
+                                                  CardSwipeOrientation.LEFT) {
+                                                // print("Card is LEFT swiping");
+                                                resetBackgroundColor();
+                                                nextMovie();
+                                              } else if (orientation ==
+                                                  CardSwipeOrientation.RIGHT) {
+                                                // print("Card is RIGHT swiping");
+                                                resetBackgroundColor();
+                                                likedMovie();
+                                                nextMovie();
+                                              }
+                                            },
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: ButtonBar(
-                                      alignment: MainAxisAlignment.center,
-                                      children: [
-                                        RawMaterialButton(
-                                          onPressed: () {
-                                            controller.triggerLeft();
-                                          },
-                                          elevation: 2.0,
-                                          fillColor: Colors.redAccent,
-                                          child: FaIcon(
-                                            FontAwesomeIcons.times,
-                                            size: 40,
-                                            color: Colors.black.withOpacity(.8),
-                                          ),
-                                          padding: EdgeInsets.all(8),
-                                          shape: CircleBorder(),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: ButtonBar(
+                                          alignment: MainAxisAlignment.center,
+                                          children: [
+                                            RawMaterialButton(
+                                              onPressed: () {
+                                                controller.triggerLeft();
+                                              },
+                                              elevation: 2.0,
+                                              fillColor: Colors.redAccent,
+                                              child: FaIcon(
+                                                FontAwesomeIcons.times,
+                                                size: 40,
+                                                color: Colors.black
+                                                    .withOpacity(.8),
+                                              ),
+                                              padding: EdgeInsets.all(8),
+                                              shape: CircleBorder(),
+                                            ),
+                                            RawMaterialButton(
+                                              onPressed: () {
+                                                controller.triggerRight();
+                                              },
+                                              elevation: 2.0,
+                                              fillColor:
+                                                  Colors.lightGreenAccent,
+                                              child: FaIcon(
+                                                FontAwesomeIcons.check,
+                                                size: 40,
+                                                color: Colors.black
+                                                    .withOpacity(.8),
+                                              ),
+                                              padding: EdgeInsets.all(8),
+                                              shape: CircleBorder(),
+                                            ),
+                                          ],
                                         ),
-                                        RawMaterialButton(
-                                          onPressed: () {
-                                            controller.triggerRight();
-                                          },
-                                          elevation: 2.0,
-                                          fillColor: Colors.lightGreenAccent,
-                                          child: FaIcon(
-                                            FontAwesomeIcons.check,
-                                            size: 40,
-                                            color: Colors.black.withOpacity(.8),
-                                          ),
-                                          padding: EdgeInsets.all(8),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ));
+                    ],
+                  ));
   }
 }

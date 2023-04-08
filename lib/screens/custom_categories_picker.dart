@@ -1,6 +1,9 @@
+// ignore_for_file: await_only_futures
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:upick_test/components/app_bar.dart';
+import 'package:upick_test/components/loading.dart';
 import 'package:upick_test/constants.dart';
 import 'package:upick_test/screens/session_chooser_page.dart';
 import 'package:upick_test/utilities/fetch_url.dart';
@@ -13,6 +16,7 @@ class CustomCategoriesPicker extends StatefulWidget {
 }
 
 class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
+  String streamingServiceValue;
   String genreValue;
   String rating;
   int genreId;
@@ -84,23 +88,7 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
       body: Center(
         child: Container(
           child: loading
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Text(
-                        'Finding your movies',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: 'NunitoSans',
-                            fontWeight: FontWeight.w700,
-                            color: Colors.blue),
-                      ),
-                    )
-                  ],
-                )
+              ? Loading()
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -113,8 +101,35 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
                         decoration: TextDecoration.underline,
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
+                    Column(
+                      children: [
+                        Text(
+                          'Streaming Service',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'NunitoSans',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        DropdownButton(
+                          value: streamingServiceValue,
+                          onChanged: (newValue) {
+                            setState(() {
+                              streamingServiceValue = newValue;
+                            });
+                          },
+                          items: streamingServicesIcons.keys
+                              .toList()
+                              .map<DropdownMenuItem<String>>(
+                            (dynamic name) {
+                              return DropdownMenuItem<String>(
+                                child: Text(name),
+                                value: name,
+                              );
+                            },
+                          ).toList(),
+                        ),
+                      ],
                     ),
                     Column(
                       children: [
@@ -215,34 +230,44 @@ class _CustomCategoriesPickerState extends State<CustomCategoriesPicker> {
                         setState(() {
                           loading = true;
                         });
-                        String requestUrl = urlStub;
-                        if (genreId != null)
-                          requestUrl += '&with_genres=$genreId';
-                        if (rating != null)
-                          requestUrl +=
-                              '&certification=$rating&certification_country=US';
+                        print(genreValue);
+                        print(rating);
+                        print(rated);
+                        await Provider.of<AppData>(context, listen: false)
+                            .filterAllMovies(
+                                streamingServiceValue,
+                                genreValue,
+                                rating,
+                                rated == null ? null : rated.toDouble());
 
-                        // print(requestUrl);
+                        // String requestUrl = urlStub;
+                        // if (genreId != null)
+                        //   requestUrl += '&with_genres=$genreId';
+                        // if (rating != null)
+                        //   requestUrl +=
+                        //       '&certification=$rating&certification_country=US';
 
-                        if (rated != null) {
-                          if (rated == 1)
-                            requestUrl += '&vote_average.gte=2';
-                          else if (rated == 2)
-                            requestUrl += '&vote_average.gte=4';
-                          else if (rated == 3)
-                            requestUrl += '&vote_average.gte=6';
-                          else if (rated == 4)
-                            requestUrl += '&vote_average.gte=8';
-                          else if (rated == 5)
-                            requestUrl += '&vote_average.gte=10';
-                        }
+                        // // print(requestUrl);
 
-                        List movieTitles = await getMovieTitles(requestUrl);
-                        List<Map<dynamic, dynamic>> movieData =
-                            await getMovieData(movieTitles);
+                        // if (rated != null) {
+                        //   if (rated == 1)
+                        //     requestUrl += '&vote_average.gte=2';
+                        //   else if (rated == 2)
+                        //     requestUrl += '&vote_average.gte=4';
+                        //   else if (rated == 3)
+                        //     requestUrl += '&vote_average.gte=6';
+                        //   else if (rated == 4)
+                        //     requestUrl += '&vote_average.gte=8';
+                        //   else if (rated == 5)
+                        //     requestUrl += '&vote_average.gte=10';
+                        // }
 
-                        Provider.of<AppData>(context, listen: false)
-                            .updateMovieData(movieData);
+                        // List movieTitles = await getMovieTitles(requestUrl);
+                        // List<Map<dynamic, dynamic>> movieData =
+                        //     await getMovieData(movieTitles);
+
+                        // Provider.of<AppData>(context, listen: false)
+                        //     .updateMovieData(movieData);
 
                         setState(() {
                           loading = false;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
-import 'package:upick_test/screens/home_screen_old.dart';
+import 'package:upick_test/screens/home_screen.dart';
 import 'package:upick_test/screens/liked_movies.dart';
 import 'package:upick_test/screens/loading_screen.dart';
 import 'package:upick_test/screens/swiper.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/home': (context) => HomeScreenOld(),
+          '/home': (context) => HomeScreen(),
           '/swipe': (context) => Swiper(),
           '/liked': (context) => LikedMovies(),
           '/loading': (context) => LoadingScreen()

@@ -4,6 +4,10 @@ import requests
 import pprint
 from bs4 import BeautifulSoup
 import pandas as pd
+from datetime import datetime
+import firebase_admin
+from firebase_admin import credentials, firestore
+
 
 data_fields = [
     'Cast',
@@ -37,13 +41,81 @@ top_rated_url = "https://api.themoviedb.org/3/movie/top_rated?api_key={}&languag
     movie_db_api_key)
 
 
-def prepare_movies():
-    popular = fetch_url_data(popular_url, 1)
+cred = credentials.Certificate(
+    r"C:\Users\taylo\Downloads\upick-775b7-firebase-adminsdk-99rxv-8393fddd54.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+
+
+# post_to_firestore(prepare_movies(100))
+
+
+def prepare_movies(num_pages=25):
+    popular = fetch_url_data(popular_url, num_pages)
     popular_titles = unique_titles(popular)
-    top_rated = fetch_url_data(top_rated_url, 1)
+    top_rated = fetch_url_data(top_rated_url, num_pages)
     top_rated_titles = unique_titles(top_rated)
     master_list = unique_movies(popular + top_rated)
     return fetch_movie_data(master_list, popular_titles, top_rated_titles)
+
+
+def post_to_firestore(movie_data):
+    wipe_movies_db()
+    for m in movie_data:
+        db.collection(u'movies').add(m)
+    get_counts()
+
+
+def wipe_movies_db():
+    docs = db.collection(u'movies').stream()
+
+    for doc in docs:
+        db.collection(u'movies').document(doc.id).delete()
+
+
+def get_counts():
+    total_count = 0
+    popular_count = 0
+    top_rated_count = 0
+    both_count = 0
+    streaming_map = {}
+    genre_map = {}
+    movie_not_found_ten = []
+    for doc in db.collection(u'movies').stream():
+        data = doc.to_dict()
+        total_count += 1
+        if data['popular']:
+            popular_count += 1
+        if data['top_rated']:
+            top_rated_count += 1
+        if data['popular'] and data['top_rated']:
+            both_count += 1
+            # print(data['Title'])
+        for s in data['streaming_options']:
+            if s in streaming_map.keys():
+                streaming_map[s] = streaming_map[s] + 1
+            else:
+                streaming_map[s] = 1
+        for g in data['Genres'].split(','):
+            g = g.strip()
+            if g in genre_map.keys():
+                genre_map[g] = genre_map[g] + 1
+            else:
+                genre_map[g] = 1
+        if 'Movie Not Found' in data['streaming_options'] and len(movie_not_found_ten) < 10:
+            movie_not_found_ten.append(
+                data['Title'] + "-(" + data['Year'] + ")")
+    print('Total Count: {}'.format(total_count))
+    print('Popular Count: {}'.format(popular_count))
+    print('Top Rated Count: {}'.format(top_rated_count))
+    print('Both Count: {}'.format(both_count))
+    print('\n10 Movies that could not be scraped:')
+    pprint.pprint(movie_not_found_ten)
+    print('\nStreaming Service Breakdown')
+    pprint.pprint(sorted(streaming_map.items(),
+                  key=lambda x: x[1], reverse=True))
+    print('\nGenre Breakdown')
+    pprint.pprint(sorted(genre_map.items(), key=lambda x: x[1], reverse=True))
 
 
 def save_data(data):
@@ -132,7 +204,8 @@ def fetch_movie_data(movies, popular_list, top_rated_list):
                 else:
                     poster_path = json_data['Poster']
 
-            streaming_services = find_streaming_services(json_data['Title'])
+            streaming_services = find_streaming_services(
+                json_data['Title'], json_data['Year'])
 
             popular = json_data['Title'] in popular_list
             top_rated = json_data['Title'] in top_rated_list
@@ -150,8 +223,10 @@ def fetch_movie_data(movies, popular_list, top_rated_list):
                 'Director': json_data['Director'],
                 'Rated': json_data['Rated'],
                 'Streaming': streaming_services,
+                'streaming_options': list(set().union(*(d.keys() for d in streaming_services))),
                 'popular': popular,
-                'top_rated': top_rated
+                'top_rated': top_rated,
+                'date_fetched': datetime.now()
             })
         except Exception as e:
             errors.append(movie)
@@ -169,13 +244,28 @@ def convert_movie_name(name):
     name = name.replace('?', '')
     for n in name.strip().split():
         final_name += n.lower() + '-'
+    # print(final_name[:-1])
     return final_name[:-1]
 
 
-def find_streaming_services(movie_name):
+def find_streaming_services(movie_name, year):
     streaming_services = []
     try:
         r = requests.get(streaming_url_stub + convert_movie_name(movie_name))
+        if r.status_code == 404:
+            r = requests.get(streaming_url_stub +
+                             convert_movie_name(movie_name))
+            print('second try')
+            if r.status_code == 404:
+                r = requests.get(
+                    streaming_url_stub + convert_movie_name(movie_name + ' ' + str(year)))
+                print(convert_movie_name(movie_name + ' ' + str(year)))
+                print('add year')
+                if r.status_code == 404:
+                    r = requests.get(streaming_url_stub +
+                                     convert_movie_name('the ' + movie_name))
+                    print(convert_movie_name('the ' + movie_name))
+                    print('add the to beginning')
         soup = BeautifulSoup(r.content, 'html.parser')
         # stream_row = soup.find(
         #     "div", {"class": "price-comparison__grid__row price-comparison__grid__row--stream"})
@@ -208,4 +298,5 @@ def find_streaming_services(movie_name):
         return streaming_services
     except Exception as e:
         # print('An error occured or no streaming platforms are available')
+        print(e)
         return [{'Movie Not Found': ''}]

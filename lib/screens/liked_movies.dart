@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:upick_test/components/app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:upick_test/screens/home_screen_old.dart';
 import 'package:provider/provider.dart';
 import 'package:upick_test/models/app_data.dart';
 import 'package:upick_test/screens/movie_detail_page.dart';
+
+import 'home_screen.dart';
 
 class LikedMoviesPage extends StatelessWidget {
   @override
@@ -46,7 +47,7 @@ class _LikedMoviesSessionState extends State<LikedMoviesSession> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreenOld(),
+        builder: (context) => HomeScreen(),
       ),
     );
   }
@@ -213,7 +214,7 @@ class _LikedMoviesState extends State<LikedMovies> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreenOld(),
+        builder: (context) => HomeScreen(),
       ),
     );
   }
